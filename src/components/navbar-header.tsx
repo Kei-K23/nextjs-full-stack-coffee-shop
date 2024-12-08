@@ -1,6 +1,9 @@
+"use client";
+
 import React from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 const NAVIGATION_LINKS = [
   {
@@ -22,8 +25,28 @@ const NAVIGATION_LINKS = [
 ];
 
 export default function NavbarHeader() {
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = React.useState(false);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious();
+    if (latest > previous && latest > 150) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
+
   return (
-    <header className="sticky top-5 flex items-center justify-center">
+    <motion.header
+      variants={{
+        visible: { y: 0 },
+        hidden: { y: "-135%" },
+      }}
+      animate={hidden ? "hidden" : "visible"}
+      transition={{ duration: 0.35, ease: "easeInOut" }}
+      className="sticky top-3 flex items-center justify-center z-50"
+    >
       <div className="px-4 py-3 bg-gray-400 rounded-[2rem] bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-700 flex items-center gap-x-2">
         <nav className="flex items-center gap-x-2">
           {NAVIGATION_LINKS.map((nav) => (
@@ -54,6 +77,6 @@ export default function NavbarHeader() {
           </Button>
         </div>
       </div>
-    </header>
+    </motion.header>
   );
 }
