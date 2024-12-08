@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
@@ -32,6 +32,7 @@ export default function NavbarHeader() {
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [isReachBanner, setIsReachBanner] = useState(false);
+  const [isLightTheme, setIsLightTheme] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() || 0;
@@ -46,6 +47,14 @@ export default function NavbarHeader() {
       setIsReachBanner(false);
     }
   });
+
+  useEffect(() => {
+    if (theme === "light") {
+      setIsLightTheme(true);
+    } else {
+      setIsLightTheme(false);
+    }
+  }, [theme]);
 
   return (
     <motion.header
@@ -71,7 +80,8 @@ export default function NavbarHeader() {
               size="sm"
               className={cn(
                 "rounded-3xl font-bold",
-                isReachBanner && "text-white dark:text-white"
+                isReachBanner && "text-white dark:text-white",
+                isLightTheme && "text-white dark:text-white"
               )}
             >
               <Link href={nav.link} className="text-lg">
@@ -88,7 +98,8 @@ export default function NavbarHeader() {
             size="sm"
             className={cn(
               "rounded-3xl font-bold",
-              isReachBanner && "text-white dark:text-white"
+              isReachBanner && "text-white dark:text-white",
+              isLightTheme && "text-white dark:text-white"
             )}
           >
             <Link href={"/sign-in"} className="text-lg">
@@ -110,7 +121,10 @@ export default function NavbarHeader() {
         <Button
           variant="ghost"
           size="icon"
-          className={cn(isReachBanner && "text-white dark:text-white")}
+          className={cn(
+            isReachBanner && "text-white dark:text-white",
+            isLightTheme && "text-white dark:text-white"
+          )}
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >
           <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />

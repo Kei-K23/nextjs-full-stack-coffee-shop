@@ -15,6 +15,14 @@ export default {
         clickerScript: "var(--font-clickerScript)",
       },
       colors: {
+        "cu-primary": {
+          DEFAULT: "#ffce85",
+          sec: "#F9C06A",
+        },
+        "cu-secondary": {
+          DEFAULT: "#845015",
+          sec: "#603809",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

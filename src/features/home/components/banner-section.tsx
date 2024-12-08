@@ -1,8 +1,14 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
 
 export default function BannerSection() {
+  function scrollTo() {
+    window.scrollTo(0, 768);
+  }
+
   return (
     <section className="h-[768px] relative dark:text-white text-white">
       <div className="h-full w-full absolute">
@@ -29,7 +35,10 @@ export default function BannerSection() {
           Order Now
         </Button>
       </div>
-      <ChevronDown className="dark:text-white text-white rounded-full absolute left-1/2 bottom-5 z-20 size-10 cursor-pointer transition bg-neutral-800/50 animate-bounce" />
+      <ChevronDown
+        onClick={scrollTo}
+        className="dark:text-white text-white rounded-full absolute left-1/2 bottom-5 z-20 size-10 cursor-pointer transition bg-neutral-800/50 animate-bounce"
+      />
     </section>
   );
 }
