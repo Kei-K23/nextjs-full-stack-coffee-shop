@@ -47,7 +47,7 @@ const PRODUCTS = [
 
 export default function ProductsSection() {
   const [ref, inView] = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.2,
   });
 
@@ -92,13 +92,13 @@ export default function ProductsSection() {
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={containerVariants}
-      className="relative my-10"
+      className="relative my-20"
     >
       <div className="px-20">
         <motion.div variants={containerVariants}>
           <motion.h2
             variants={itemVariants}
-            className="text-cu-secondary-sec dark:text-cu-secondary text-[54px] font-bold mb-2 text-center"
+            className="text-cu-secondary-sec dark:text-cu-primary-sec text-[54px] font-bold mb-2 text-center"
           >
             Enjoy a new blend of coffee style
           </motion.h2>
@@ -118,7 +118,7 @@ export default function ProductsSection() {
       </div>
       <motion.div
         variants={blastVariants}
-        className="absolute right-0 w-[298px] h-[172px] -bottom-20"
+        className="absolute right-0 w-[298px] h-[172px] -bottom-30"
       >
         <Image
           src="/img/coffee_blast_right.png"

@@ -23,6 +23,10 @@ export default {
           DEFAULT: "#845015",
           sec: "#603809",
         },
+        "primary-card": {
+          DEFAULT: "hsla(35, 92%, 80%, 0.2)",
+          sec: "hsla(36, 92%, 70%, 0.2)",
+        },
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         card: {

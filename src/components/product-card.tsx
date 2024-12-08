@@ -8,12 +8,12 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   return (
-    <div className="bg-[#fceec7]/50">
+    <div className="bg-primary-card hover:bg-primary-card-sec transition-all">
       <div className="aspect-[4/3] relative">
         <Image src={product.image} alt={product.name} fill />
       </div>
       <div className="flex items-center justify-center flex-col p-4">
-        <p className="text-xl font-bold text-cu-secondary-sec">
+        <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">
           {product.name}
         </p>
         <div className="flex items-center gap-2 flex-wrap">
@@ -28,7 +28,7 @@ export default function ProductCard({ product }: ProductCardProps) {
             );
           })}
         </div>
-        <p className="text-xl font-bold text-cu-secondary-sec">
+        <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">
           ${product.price}
         </p>
         <Button

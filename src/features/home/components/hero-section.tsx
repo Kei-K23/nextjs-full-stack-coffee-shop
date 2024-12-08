@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function HeroSection() {
   const [ref, inView] = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.2,
   });
 
@@ -69,7 +69,7 @@ export default function HeroSection() {
         <motion.div className="flex-1 w-full" variants={containerVariants}>
           <motion.h2
             variants={itemVariants}
-            className="text-cu-secondary-sec dark:text-cu-secondary text-[54px] font-bold mb-6"
+            className="text-cu-secondary-sec dark:text-cu-primary-sec text-[54px] font-bold mb-6"
           >
             Discover the best coffee
           </motion.h2>
