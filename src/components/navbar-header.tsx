@@ -81,7 +81,7 @@ export default function NavbarHeader() {
               className={cn(
                 "rounded-3xl font-bold",
                 isReachBanner && "text-white dark:text-white",
-                isLightTheme && "text-white dark:text-white"
+                isLightTheme && isReachBanner && "text-white dark:text-white"
               )}
             >
               <Link href={nav.link} className="text-lg">
@@ -99,7 +99,7 @@ export default function NavbarHeader() {
             className={cn(
               "rounded-3xl font-bold",
               isReachBanner && "text-white dark:text-white",
-              isLightTheme && "text-white dark:text-white"
+              isLightTheme && isReachBanner && "text-white dark:text-white"
             )}
           >
             <Link href={"/sign-in"} className="text-lg">
@@ -123,7 +123,7 @@ export default function NavbarHeader() {
           size="icon"
           className={cn(
             isReachBanner && "text-white dark:text-white",
-            isLightTheme && "text-white dark:text-white"
+            isLightTheme && isReachBanner && "text-white dark:text-white"
           )}
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >

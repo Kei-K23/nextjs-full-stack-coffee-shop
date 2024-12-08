@@ -6,7 +6,7 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="font-playfairDisplay">
+    <div className="font-playfairDisplay overflow-hidden">
       <NavbarHeader />
       {children}
     </div>

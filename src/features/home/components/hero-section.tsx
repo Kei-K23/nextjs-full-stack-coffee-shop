@@ -83,9 +83,10 @@ export default function HeroSection() {
             There is no doubt that you will enjoy this coffee more than others
             you have ever tasted.
           </motion.p>
+          {/* TODO: Check whey text is not hover */}
           <motion.button
             variants={itemVariants}
-            className="bg-cu-primary-sec cursor-pointer px-6 py-3 rounded-3xl font-bold mt-4 hover:bg-cu-primary-sec/80 transition-colors text-black dark:text-black"
+            className="bg-cu-primary-sec cursor-pointer px-6 py-3 rounded-3xl font-bold mt-4 hover:bg-cu-primary-sec/80 transition-colors text-black dark:text-black z-20 relative"
           >
             Learn More
           </motion.button>
@@ -105,7 +106,7 @@ export default function HeroSection() {
 
       <motion.div
         variants={blastVariants}
-        className="absolute w-[298px] h-[172px] -bottom-10"
+        className="absolute left-0 w-[298px] h-[172px] -bottom-10"
       >
         <Image
           src="/img/coffee_blast_left.png"
