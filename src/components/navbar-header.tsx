@@ -29,7 +29,7 @@ export default function NavbarHeader() {
   const [hidden, setHidden] = React.useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    const previous = scrollY.getPrevious();
+    const previous = scrollY.getPrevious() || 0;
     if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
@@ -45,7 +45,7 @@ export default function NavbarHeader() {
       }}
       animate={hidden ? "hidden" : "visible"}
       transition={{ duration: 0.35, ease: "easeInOut" }}
-      className="sticky top-3 flex items-center justify-center z-50"
+      className="fixed w-full top-4 flex items-center justify-center z-50"
     >
       <div className="px-4 py-3 bg-gray-400 rounded-[2rem] bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-700 flex items-center gap-x-2">
         <nav className="flex items-center gap-x-2">
@@ -55,7 +55,7 @@ export default function NavbarHeader() {
               asChild
               variant="ghost"
               size="sm"
-              className="rounded-2xl"
+              className="rounded-3xl"
             >
               <Link href={nav.link} className="text-lg">
                 {nav.name}
@@ -65,12 +65,12 @@ export default function NavbarHeader() {
         </nav>
         <div className="w-[1px] h-8 bg-gray-500 mx-2" />
         <div className="flex items-center gap-x-2">
-          <Button asChild variant="ghost" size="sm" className="rounded-2xl">
+          <Button asChild variant="ghost" size="sm" className="rounded-3xl">
             <Link href={"/sign-in"} className="text-lg">
               Sign In
             </Link>
           </Button>
-          <Button asChild variant="primary" size="sm" className="rounded-2xl">
+          <Button asChild variant="primary" size="sm" className="rounded-3xl">
             <Link href={"/sign-up"} className="text-lg">
               Sign Up
             </Link>
