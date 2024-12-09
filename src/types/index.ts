@@ -17,3 +17,10 @@ export type Feature = {
   >;
   description: string;
 };
+
+export type Testimonial = {
+  content: string;
+  name: string;
+  role: string;
+  profileImage: string;
+};
