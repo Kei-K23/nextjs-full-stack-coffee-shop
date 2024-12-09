@@ -7,6 +7,7 @@ import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 const NAVIGATION_LINKS = [
   {
@@ -29,6 +30,7 @@ const NAVIGATION_LINKS = [
 
 export default function NavbarHeader() {
   const { theme, setTheme } = useTheme();
+  const pathname = usePathname();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
   const [isReachBanner, setIsReachBanner] = useState(false);
@@ -41,10 +43,20 @@ export default function NavbarHeader() {
     } else {
       setHidden(false);
     }
-    if (latest < 704 || latest > 3940) {
-      setIsReachBanner(true);
-    } else {
-      setIsReachBanner(false);
+    if (pathname === "/") {
+      if (latest < 704 || latest > 3940) {
+        setIsReachBanner(true);
+      } else {
+        setIsReachBanner(false);
+      }
+    }
+
+    if (pathname === "/menu") {
+      if (latest < 400 || latest > 3940) {
+        setIsReachBanner(true);
+      } else {
+        setIsReachBanner(false);
+      }
     }
   });
 
