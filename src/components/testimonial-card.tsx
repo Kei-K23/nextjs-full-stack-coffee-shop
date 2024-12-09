@@ -16,7 +16,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
       <p className="text-center text-lg md:text-xl font-semibold leading-loose">
         {testimonial.content}
       </p>
-      <span className="mt-4 text-center text-4xl font-bold text-cu-secondary">
+      <span className="mt-4 text-center text-4xl font-bold text-cu-secondary dark:text-cu-primary-sec">
         {testimonial.name}
       </span>
       <span className="text-center text-xl text-muted-foreground">
@@ -24,7 +24,7 @@ export default function TestimonialCard({ testimonial }: TestimonialCardProps) {
       </span>
       <Avatar className="size-16 rounded-lg bg-cu-primary-sec">
         <AvatarImage src={testimonial.profileImage} alt={testimonial.name} />
-        <AvatarFallback className="bg-cu-primary-sec">
+        <AvatarFallback className="bg-cu-primary-sec text-black dark:text-black">
           <b className="text-3xl">{testimonial.name.charAt(0).toUpperCase()}</b>
         </AvatarFallback>
       </Avatar>

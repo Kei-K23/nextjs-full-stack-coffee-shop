@@ -1,3 +1,4 @@
+import Footer from "@/components/footer";
 import NavbarHeader from "@/components/navbar-header";
 
 export default function MainLayout({
@@ -9,6 +10,7 @@ export default function MainLayout({
     <div className="font-playfairDisplay overflow-hidden">
       <NavbarHeader />
       {children}
+      <Footer />
     </div>
   );
 }

@@ -115,8 +115,8 @@ export default function TestimonialSection() {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <CarouselPrevious className="bg-cu-primary size-12 rounded-lg hover:bg-cu-primary-sec" />
-          <CarouselNext className="bg-cu-primary size-12 rounded-lg hover:bg-cu-primary-sec" />
+          <CarouselPrevious className="bg-cu-primary size-12 rounded-lg hover:bg-cu-primary-sec text-black dark:text-black" />
+          <CarouselNext className="bg-cu-primary size-12 rounded-lg hover:bg-cu-primary-sec text-black dark:text-black" />
         </Carousel>
       </div>
       <motion.div

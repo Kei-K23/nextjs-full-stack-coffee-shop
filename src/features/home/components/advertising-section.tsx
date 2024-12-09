@@ -64,7 +64,7 @@ export default function AdvertisingSection() {
       </div>
       <motion.div
         variants={containerVariants}
-        className="relative h-full text-white px-20 flex items-center justify-between gap-x-8"
+        className="relative h-full text-white dark:text-white px-20 flex items-center justify-between gap-x-8"
       >
         <motion.div variants={containerVariants} className="w-full md:w-1/2">
           <motion.h2 variants={itemVariants} className="text-[54px]">
