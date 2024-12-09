@@ -156,13 +156,10 @@ export default function Footer() {
           <div className="pt-4">
             <h3 className="text-2xl mb-3">Contact Us</h3>
             <ul className="flex flex-col gap-y-1">
-              <li>
-                Akshya Nagar 1st Block 1st Cross, Rammurthy nagar,
-                Bangalore-560016
-              </li>
+              <li>123 Coffee Lane, Brewville, BV 12345</li>
               <li>+1 202-918-2132</li>
-              <li>beanscene@mail.com</li>
-              <li>www.beanscene.com</li>
+              <li>brewhaven@mail.com</li>
+              <li>www.brewhaven.com</li>
             </ul>
           </div>
         </div>
