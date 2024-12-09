@@ -100,7 +100,9 @@ export default function NavbarHeader() {
                 "rounded-3xl font-bold",
                 (isLightTheme && isReachBanner) || isReachBanner
                   ? "text-white dark:text-white"
-                  : ""
+                  : "",
+                pathname === nav.link &&
+                  "bg-cu-primary hover:bg-cu-primary/80 text-black dark:text-black"
               )}
             >
               <Link href={nav.link} className="text-lg">
