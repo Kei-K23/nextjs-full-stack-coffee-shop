@@ -77,7 +77,7 @@ export default function HeroSection() {
             variants={itemVariants}
             className="text-lg md:text-xl text-muted-foreground"
           >
-            Bean Scene is a coffee shop that provides you with quality coffee
+            Brew Haven is a coffee shop that provides you with quality coffee
             that helps boost your productivity and helps build your mood. Having
             a cup of coffee is good, but having a cup of real coffee is greater.
             There is no doubt that you will enjoy this coffee more than others

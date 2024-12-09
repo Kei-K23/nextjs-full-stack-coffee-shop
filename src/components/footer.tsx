@@ -114,7 +114,7 @@ export default function Footer() {
         <div className="absolute w-full h-full top-0 left-0 bg-cu-secondary-sec/90" />
         <div className="relative pt-52 px-20 w-full h-full grid grid-cols-4 gap-x-14">
           <div>
-            <h3 className="text-[54px] font-clickerScript">Bean Scene</h3>
+            <h3 className="text-[54px] font-clickerScript">Brew Haven</h3>
             <p className="text-sm">
               Lorem Ipsum is simply dummy text of the printing and typesetting
               industry. Lorem Ipsum has been the industry&apos;s standard dummy
@@ -167,7 +167,7 @@ export default function Footer() {
           </div>
         </div>
         <p className="absolute bottom-4 left-1/2 -translate-x-1/2">
-          Copyright-{new Date().getFullYear()}@Bean Scene
+          Copyright-{new Date().getFullYear()}@Brew Haven
         </p>
       </div>
       <motion.div
