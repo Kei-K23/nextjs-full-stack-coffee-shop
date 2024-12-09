@@ -41,7 +41,7 @@ export default function NavbarHeader() {
     } else {
       setHidden(false);
     }
-    if (latest < 704) {
+    if (latest < 704 || latest > 3940) {
       setIsReachBanner(true);
     } else {
       setIsReachBanner(false);
@@ -57,7 +57,7 @@ export default function NavbarHeader() {
   }, [theme]);
 
   useEffect(() => {
-    if (window.scrollY < 704) {
+    if (window.scrollY < 704 || window.screenY > 3940) {
       setIsReachBanner(true);
     }
   }, []);
