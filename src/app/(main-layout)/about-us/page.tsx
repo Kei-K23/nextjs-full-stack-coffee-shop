@@ -5,7 +5,7 @@ export default function AboutUs() {
   return (
     <div className="container mx-auto px-4 py-16 mt-10 space-y-16">
       <section className="text-center">
-        <h1 className="text-cu-secondary-sec dark:text-cu-primary-sec text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+        <h1 className="text-cu-secondary-sec dark:text-cu-primary-sec text-[54px] font-bold mb-4">
           Our Story
         </h1>
         <p className="text-lg md:text-xl max-w-3xl mx-auto">

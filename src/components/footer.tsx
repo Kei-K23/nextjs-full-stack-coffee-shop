@@ -157,9 +157,8 @@ export default function Footer() {
             <h3 className="text-2xl mb-3">Contact Us</h3>
             <ul className="flex flex-col gap-y-1">
               <li>123 Coffee Lane, Brewville, BV 12345</li>
-              <li>+1 202-918-2132</li>
-              <li>brewhaven@mail.com</li>
-              <li>www.brewhaven.com</li>
+              <li>(555) 123-4567</li>
+              <li>hello@brewhaven.com</li>
             </ul>
           </div>
         </div>
