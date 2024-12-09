@@ -1,3 +1,4 @@
+import AdvertisingSection from "@/features/home/components/advertising-section";
 import BannerSection from "@/features/home/components/banner-section";
 import FeaturesSection from "@/features/home/components/features-section";
 import HeroSection from "@/features/home/components/hero-section";
@@ -10,6 +11,7 @@ export default function Home() {
       <HeroSection />
       <ProductsSection />
       <FeaturesSection />
+      <AdvertisingSection />
     </div>
   );
 }

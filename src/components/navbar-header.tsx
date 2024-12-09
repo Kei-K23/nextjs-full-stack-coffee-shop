@@ -56,6 +56,12 @@ export default function NavbarHeader() {
     }
   }, [theme]);
 
+  useEffect(() => {
+    if (window.scrollY < 704) {
+      setIsReachBanner(true);
+    }
+  }, []);
+
   return (
     <motion.header
       variants={{
@@ -80,8 +86,9 @@ export default function NavbarHeader() {
               size="sm"
               className={cn(
                 "rounded-3xl font-bold",
-                isReachBanner && "text-white dark:text-white",
-                isLightTheme && isReachBanner && "text-white dark:text-white"
+                (isLightTheme && isReachBanner) || isReachBanner
+                  ? "text-white dark:text-white"
+                  : ""
               )}
             >
               <Link href={nav.link} className="text-lg">
