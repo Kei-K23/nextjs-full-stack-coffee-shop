@@ -13,6 +13,7 @@ interface NavbarState {
   setInFooter: (value: boolean) => void;
   setInAdvertising: (value: boolean) => void;
   setPosition: (position: number) => void;
+  resetState: () => void;
 }
 
 export const useNavbarStore = create<NavbarState>((set) => ({
@@ -26,4 +27,12 @@ export const useNavbarStore = create<NavbarState>((set) => ({
   setInFooter: (value) => set({ isInFooter: value }),
   setInAdvertising: (value) => set({ isInAdvertising: value }),
   setPosition: (position) => set({ position }),
+  resetState: () =>
+    set({
+      position: 0,
+      isInBanner: false,
+      isInSlideshow: false,
+      isInFooter: false,
+      isInAdvertising: false,
+    }),
 }));

@@ -22,7 +22,7 @@ export default function BannerSection() {
         setInBanner(false);
       }
     }
-  }, [position]);
+  }, [setInBanner, position]);
 
   return (
     <section className="h-[768px] relative dark:text-white text-white">

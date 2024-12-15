@@ -1,34 +1,63 @@
-import ContactForm from "@/features/contact-us/components/contact-form";
-import ContactInfoCard from "@/features/contact-us/components/contact-info-card";
+import ContactUsScreen from "@/features/contact-us/components/contact-us-screen";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: {
+    default: "Contact Us",
+    template: "%s | Brew Haven Coffee Shop",
+  },
+  description:
+    "Discover artisanal coffee and cozy vibes at Brew Haven, your local coffee shop serving premium brews and delightful pastries.",
+  keywords: ["coffee shop", "artisanal coffee", "pastries", "local cafe"],
+  authors: [{ name: "Brew Haven Team" }],
+  creator: "Brew Haven Coffee Shop",
+  publisher: "Brew Haven Coffee Shop",
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  openGraph: {
+    title: "Brew Haven Coffee Shop",
+    description: "Your cozy corner for premium coffee and delightful treats",
+    url: "https://www.brewhaven.com",
+    siteName: "Brew Haven Coffee Shop",
+    images: [
+      {
+        url: "https://www.brewhaven.com/og-image.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Brew Haven Coffee Shop - Artisanal Coffee and Cozy Vibes",
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Brew Haven Coffee Shop",
+    description: "Your cozy corner for premium coffee and delightful treats",
+    creator: "@brewhaven",
+    images: ["https://www.brewhaven.com/twitter-image.jpg"],
+  },
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+  },
+};
 
 export default function ContactUsPage() {
-  return (
-    <div className="container mx-auto px-4 py-16 mt-10 space-y-16">
-      <section className="text-center">
-        <h1 className="text-cu-secondary-sec dark:text-cu-primary-sec font-playfairDisplay text-[54px] font-bold mb-4">
-          Contact Us
-        </h1>
-        <p className="text-lg md:text-xl max-w-3xl mx-auto">
-          We&apos;d love to hear from you! Whether you have a question about our
-          coffee, want to book an event, or just want to say hello, don&apos;t
-          hesitate to reach out.
-        </p>
-      </section>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <ContactForm />
-        <ContactInfoCard />
-      </div>
-
-      <section className="text-center bg-primary-card p-8 rounded-lg">
-        <h2 className="font-clickerScript text-4xl md:text-5xl mb-4">
-          Visit Our Coffee Shop
-        </h2>
-        <p className="text-lg mb-2">Open daily from 7 AM to 8 PM</p>
-        <p className="text-lg text-muted-foreground">
-          We can&apos;t wait to serve you the perfect cup!
-        </p>
-      </section>
-    </div>
-  );
+  return <ContactUsScreen />;
 }
