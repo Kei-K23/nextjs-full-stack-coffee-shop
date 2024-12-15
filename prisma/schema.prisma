@@ -1,22 +1,25 @@
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
 generator client {
   provider = "prisma-client-js"
 }
 
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // Replace with your database URL
+}
+
 model User {
-  id            String          @id @default(cuid())
-  name          String?
-  email         String          @unique
-  emailVerified DateTime?
-  image         String?
-  accounts      Account[]
-  sessions      Session[]
-  // Optional for WebAuthn support
-  Authenticator Authenticator[]
+  id             String          @id @default(cuid())
+  name           String?
+  email          String          @unique
+  emailVerified  DateTime?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  authenticators Authenticator[]
+
+  coinBalance Int               @default(0)
+  orders      Order[]           @relation("UserOrders")
+  coinTxns    CoinTransaction[] @relation("UserCoinTransactions")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -27,23 +30,24 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
+  refreshToken      String?
+  accessToken       String?
+  expiresAt         Int?
+  tokenType         String?
   scope             String?
-  id_token          String?
-  session_state     String?
+  idToken           String?
+  sessionState      String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@id([provider, providerAccountId])
 }
 
 model Session {
+  id           String   @id @default(cuid())
   sessionToken String   @unique
   userId       String
   expires      DateTime
@@ -53,26 +57,115 @@ model Session {
   updatedAt DateTime @updatedAt
 }
 
-model VerificationToken {
-  identifier String
-  token      String
-  expires    DateTime
+model Authenticator {
+  id                  String  @id @default(cuid())
+  credentialID        String  @unique
+  userId              String
+  credentialPublicKey String
+  counter             Int
+  transports          String?
+  user                User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  @@id([identifier, token])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-// Optional for WebAuthn support
-model Authenticator {
-  credentialID         String  @unique
-  userId               String
-  providerAccountId    String
-  credentialPublicKey  String
-  counter              Int
-  credentialDeviceType String
-  credentialBackedUp   Boolean
-  transports           String?
+model Coffee {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  price       Float
+  coinPrice   Int
+  imageUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  orderDetails OrderDetails[]
+}
 
-  @@id([userId, credentialID])
+model Order {
+  id             String      @id @default(cuid())
+  userId         String
+  user           User        @relation("UserOrders", fields: [userId], references: [id])
+  orderStatus    OrderStatus
+  totalPrice     Float
+  totalCoinsUsed Int         @default(0)
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  orderDetails    OrderDetails[]
+  payment         Payment?
+  coinTransaction CoinTransaction? @relation("OrderCoinTransaction")
+}
+
+model OrderDetails {
+  id        String   @id @default(cuid())
+  orderId   String
+  coffeeId  String
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  order  Order  @relation(fields: [orderId], references: [id])
+  coffee Coffee @relation(fields: [coffeeId], references: [id])
+}
+
+model Payment {
+  id            String        @id @default(cuid())
+  orderId       String        @unique
+  paymentMethod PaymentMethod
+  paymentStatus PaymentStatus
+  transactionId String        @unique
+  amountPaid    Float
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  order Order @relation(fields: [orderId], references: [id])
+}
+
+model CoinTransaction {
+  id              String          @id @default(cuid())
+  userId          String
+  transactionType TransactionType
+  coins           String
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  user    User    @relation("UserCoinTransactions", fields: [userId], references: [id])
+  orderId String? @unique
+  order   Order?  @relation("OrderCoinTransaction", fields: [orderId], references: [id])
+}
+
+model Admin {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  Pending
+  Paid
+  Cancelled
+  Completed
+}
+
+enum PaymentMethod {
+  CreditCard
+  PayPal
+  Cash
+}
+
+enum PaymentStatus {
+  Pending
+  Paid
+  Failed
+}
+
+enum TransactionType {
+  Earned
+  Spent
 }
