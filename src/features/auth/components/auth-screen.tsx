@@ -6,11 +6,13 @@ import { AuthHero } from "./auth-hero";
 import { OAuthButton } from "./oauth-button";
 import { TermsNotice } from "./terms-notice";
 import Link from "next/link";
+import { signIn } from "@/lib/auth";
 
 export default function AuthScreenPage() {
-  const handleOAuthLogin = (provider: "google" | "github") => {
-    // OAuth login logic will be implemented here
-    console.log(`Logging in with ${provider}`);
+  const handleOAuthLogin = async (provider: "google" | "github") => {
+    if (provider === "github") {
+      await signIn("github");
+    }
   };
 
   return (
