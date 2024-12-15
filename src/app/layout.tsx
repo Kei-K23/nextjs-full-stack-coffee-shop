@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "sonner";
+import { SessionProvider } from "next-auth/react";
 
 const playfairDisplay = localFont({
   src: "./fonts/PlayfairDisplay-VariableFont_wght.ttf",
@@ -88,7 +89,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <SessionProvider>{children}</SessionProvider>
           <Toaster />
         </ThemeProvider>
       </body>

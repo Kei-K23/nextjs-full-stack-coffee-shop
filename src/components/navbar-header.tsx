@@ -6,9 +6,10 @@ import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
-import { Coffee, Moon, Sun } from "lucide-react";
+import { Coffee, Moon, Sun, User } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useNavbarStore } from "@/stores/use-navbar-store";
+import { useSession } from "next-auth/react";
 
 const NAVIGATION_LINKS = [
   {
@@ -38,6 +39,7 @@ export default function NavbarHeader() {
     isInFooter,
     isInSlideshow,
   } = useNavbarStore();
+  const { data: session } = useSession();
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
@@ -115,16 +117,25 @@ export default function NavbarHeader() {
         <div className="flex items-center gap-x-2">
           {/* <div className="w-[1px] h-8 bg-gray-500 mx-2" /> */}
           <div className="flex items-center gap-x-2">
-            <Button
-              asChild
-              variant="primary"
-              size="sm"
-              className="rounded-3xl dark:text-black text-black font-bold"
-            >
-              <Link href={"/auth"} className="text-lg">
-                Sign In
-              </Link>
-            </Button>
+            {!!session?.user ? (
+              <User
+                className={cn(
+                  isInside && "text-white dark:text-white",
+                  isLightTheme && isInside && "text-white dark:text-white"
+                )}
+              />
+            ) : (
+              <Button
+                asChild
+                variant="primary"
+                size="sm"
+                className="rounded-3xl dark:text-black text-black font-bold"
+              >
+                <Link href={"/auth"} className="text-lg">
+                  Sign In
+                </Link>
+              </Button>
+            )}
           </div>
           <Button
             variant="ghost"

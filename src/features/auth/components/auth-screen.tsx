@@ -6,12 +6,12 @@ import { AuthHero } from "./auth-hero";
 import { OAuthButton } from "./oauth-button";
 import { TermsNotice } from "./terms-notice";
 import Link from "next/link";
-import { signIn } from "@/lib/auth";
+import { signIn } from "next-auth/react";
 
 export default function AuthScreenPage() {
   const handleOAuthLogin = async (provider: "google" | "github") => {
     if (provider === "github") {
-      await signIn("github");
+      signIn("github", { redirectTo: "/" });
     }
   };
 
