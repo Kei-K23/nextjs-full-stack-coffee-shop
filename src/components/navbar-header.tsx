@@ -105,26 +105,12 @@ export default function NavbarHeader() {
         <div className="flex items-center gap-x-2">
           <Button
             asChild
-            variant="ghost"
-            size="sm"
-            className={cn(
-              "rounded-3xl font-bold",
-              isInside && "text-white dark:text-white",
-              isLightTheme && isInside && "text-white dark:text-white"
-            )}
-          >
-            <Link href={"/sign-in"} className="text-lg">
-              Sign In
-            </Link>
-          </Button>
-          <Button
-            asChild
             variant="primary"
             size="sm"
             className="rounded-3xl dark:text-black text-black font-bold"
           >
-            <Link href={"/sign-up"} className="text-lg">
-              Sign Up
+            <Link href={"/auth"} className="text-lg">
+              Sign In
             </Link>
           </Button>
         </div>
