@@ -57,7 +57,7 @@ export default function ImageSlideshow({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
           />
-          <div className="absolute w-full h-full top-0 left-0 bg-cu-secondary/70" />
+          <div className="absolute w-full h-full top-0 left-0 bg-cu-secondary/80" />
         </AnimatePresence>
         <div className="absolute bottom-4 left-0 right-0">
           <div className="flex items-center justify-center gap-2">

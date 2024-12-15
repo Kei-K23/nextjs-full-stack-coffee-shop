@@ -9,8 +9,13 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="bg-primary-card hover:bg-primary-card-sec transition-all">
-      <div className="aspect-[4/3] relative">
-        <Image src={product.image} alt={product.name} fill />
+      <div className="aspect-[4/3] relative overflow-hidden transition-all">
+        <Image
+          src={product.image}
+          alt={product.name}
+          fill
+          className="hover:scale-110 transition-all"
+        />
       </div>
       <div className="flex items-center justify-center flex-col p-4">
         <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">

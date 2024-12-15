@@ -5,5 +5,5 @@ export default function AuthLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <div>{children}</div>;
+  return <div className="font-playfairDisplay">{children}</div>;
 }

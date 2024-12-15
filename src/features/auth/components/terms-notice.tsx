@@ -2,7 +2,7 @@
 
 export function TermsNotice() {
   return (
-    <div className="text-center text-sm text-muted-foreground dark:text-gray-400 mt-6">
+    <div className="text-center text-sm text-muted-foreground">
       By continuing, you agree to our{" "}
       <a
         href="#"
