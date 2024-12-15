@@ -3,8 +3,12 @@
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import { motion } from "framer-motion";
+import { useEffect, useRef } from "react";
+import { useNavbarStore } from "@/stores/use-navbar-store";
 
 export default function AdvertisingSection() {
+  const { position, setInAdvertising } = useNavbarStore();
+  const eleRef = useRef<HTMLDivElement | null>(null);
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -45,6 +49,17 @@ export default function AdvertisingSection() {
     },
   };
 
+  useEffect(() => {
+    if (eleRef.current) {
+      const rect = eleRef.current.getBoundingClientRect();
+      if (rect.top <= 0 && rect.height >= Math.abs(rect.top)) {
+        setInAdvertising(true);
+      } else {
+        setInAdvertising(false);
+      }
+    }
+  }, [position]);
+
   return (
     <motion.section
       ref={ref}
@@ -53,7 +68,7 @@ export default function AdvertisingSection() {
       variants={containerVariants}
       className="h-[574px] relative w-full my-20"
     >
-      <div className="w-full h-full absolute">
+      <div ref={eleRef} className="w-full h-full absolute">
         <Image
           src="/img/coffee_rectangle.png"
           alt="coffee_rectangle"

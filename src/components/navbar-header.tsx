@@ -8,6 +8,7 @@ import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
+import { useNavbarStore } from "@/stores/use-navbar-store";
 
 const NAVIGATION_LINKS = [
   {
@@ -30,33 +31,26 @@ const NAVIGATION_LINKS = [
 
 export default function NavbarHeader() {
   const { theme, setTheme } = useTheme();
+  const {
+    setPosition,
+    isInAdvertising,
+    isInBanner,
+    isInFooter,
+    isInSlideshow,
+  } = useNavbarStore();
   const pathname = usePathname();
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
-  const [isReachBanner, setIsReachBanner] = useState(false);
   const [isLightTheme, setIsLightTheme] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
+    setPosition(latest);
+
     const previous = scrollY.getPrevious() || 0;
     if (latest > previous && latest > 150) {
       setHidden(true);
     } else {
       setHidden(false);
-    }
-    if (pathname === "/") {
-      if (latest < 704 || latest > 3940) {
-        setIsReachBanner(true);
-      } else {
-        setIsReachBanner(false);
-      }
-    }
-
-    if (pathname === "/menu") {
-      if (latest < 400 || latest > 3940) {
-        setIsReachBanner(true);
-      } else {
-        setIsReachBanner(false);
-      }
     }
   });
 
@@ -68,11 +62,7 @@ export default function NavbarHeader() {
     }
   }, [theme]);
 
-  useEffect(() => {
-    if (window.scrollY < 704 || window.screenY > 3940) {
-      setIsReachBanner(true);
-    }
-  }, []);
+  const isInside = isInAdvertising || isInBanner || isInFooter || isInSlideshow;
 
   return (
     <motion.header
@@ -98,7 +88,7 @@ export default function NavbarHeader() {
               size="sm"
               className={cn(
                 "rounded-3xl font-bold",
-                (isLightTheme && isReachBanner) || isReachBanner
+                (isLightTheme && isInside) || isInside
                   ? "text-white dark:text-white"
                   : "",
                 pathname === nav.link &&
@@ -119,8 +109,8 @@ export default function NavbarHeader() {
             size="sm"
             className={cn(
               "rounded-3xl font-bold",
-              isReachBanner && "text-white dark:text-white",
-              isLightTheme && isReachBanner && "text-white dark:text-white"
+              isInside && "text-white dark:text-white",
+              isLightTheme && isInside && "text-white dark:text-white"
             )}
           >
             <Link href={"/sign-in"} className="text-lg">
@@ -143,8 +133,8 @@ export default function NavbarHeader() {
           variant="ghost"
           size="icon"
           className={cn(
-            isReachBanner && "text-white dark:text-white",
-            isLightTheme && isReachBanner && "text-white dark:text-white"
+            isInside && "text-white dark:text-white",
+            isLightTheme && isInside && "text-white dark:text-white"
           )}
           onClick={() => setTheme(theme === "light" ? "dark" : "light")}
         >

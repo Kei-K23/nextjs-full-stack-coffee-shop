@@ -1,17 +1,32 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { useNavbarStore } from "@/stores/use-navbar-store";
 import { ChevronDown } from "lucide-react";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function BannerSection() {
+  const { position, setInBanner } = useNavbarStore();
+  const eleRef = useRef<HTMLDivElement | null>(null);
   function scrollTo() {
     window.scrollTo(0, 768);
   }
 
+  useEffect(() => {
+    if (eleRef.current) {
+      const rect = eleRef.current.getBoundingClientRect();
+      if (rect.top <= 0 && rect.height >= Math.abs(rect.top)) {
+        setInBanner(true);
+      } else {
+        setInBanner(false);
+      }
+    }
+  }, [position]);
+
   return (
     <section className="h-[768px] relative dark:text-white text-white">
-      <div className="h-full w-full absolute">
+      <div ref={eleRef} className="h-full w-full absolute">
         <div className="absolute top-0 left-0 w-full h-full bg-black/30 z-10" />
         <Image
           src="/img/main_banner.png"
