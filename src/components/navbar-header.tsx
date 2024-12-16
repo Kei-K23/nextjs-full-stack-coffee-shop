@@ -6,10 +6,11 @@ import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
-import { Coffee, Moon, Sun, User } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { Coffee, Moon, Sun, UserIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 import { useNavbarStore } from "@/stores/use-navbar-store";
 import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const NAVIGATION_LINKS = [
   {
@@ -31,6 +32,7 @@ const NAVIGATION_LINKS = [
 ];
 
 export default function NavbarHeader() {
+  const router = useRouter();
   const { theme, setTheme } = useTheme();
   const {
     setPosition,
@@ -118,12 +120,20 @@ export default function NavbarHeader() {
           {/* <div className="w-[1px] h-8 bg-gray-500 mx-2" /> */}
           <div className="flex items-center gap-x-2">
             {!!session?.user ? (
-              <User
-                className={cn(
-                  isInside && "text-white dark:text-white",
-                  isLightTheme && isInside && "text-white dark:text-white"
-                )}
-              />
+              <Avatar
+                onClick={() => {
+                  router.push("/profile");
+                }}
+                className="h-10 w-10 cursor-pointer"
+              >
+                <AvatarImage
+                  src={session.user?.image || ""}
+                  alt={session.user?.name || "User"}
+                />
+                <AvatarFallback>
+                  <UserIcon className="h-10 w-10" />
+                </AvatarFallback>
+              </Avatar>
             ) : (
               <Button
                 asChild
