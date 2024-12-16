@@ -131,7 +131,7 @@ export default function NavbarHeader() {
                   alt={session.user?.name || "User"}
                 />
                 <AvatarFallback>
-                  <UserIcon className="h-10 w-10" />
+                  <UserIcon className="h-6 w-6" />
                 </AvatarFallback>
               </Avatar>
             ) : (
