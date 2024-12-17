@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { verify } from "argon2";
 
 export const getAdminUser = async (email: string, password: string) => {
   try {
@@ -11,8 +12,8 @@ export const getAdminUser = async (email: string, password: string) => {
     if (!adminUser) {
       throw new Error("User not found");
     }
-
-    if (adminUser.password !== password) {
+    const isVerify = await verify(adminUser.password, password);
+    if (!isVerify) {
       throw new Error("Invalid credentials");
     }
 

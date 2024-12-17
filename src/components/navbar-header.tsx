@@ -11,6 +11,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useNavbarStore } from "@/stores/use-navbar-store";
 import { useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useLocation } from "@/provider/ip-address-provider";
 
 const NAVIGATION_LINKS = [
   {
@@ -33,6 +34,7 @@ const NAVIGATION_LINKS = [
 
 export default function NavbarHeader() {
   const router = useRouter();
+  const { location } = useLocation();
   const { theme, setTheme } = useTheme();
   const {
     setPosition,
@@ -117,6 +119,7 @@ export default function NavbarHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-x-2">
+          <span>{location}</span>
           {/* <div className="w-[1px] h-8 bg-gray-500 mx-2" /> */}
           <div className="flex items-center gap-x-2">
             {!!session?.user ? (
