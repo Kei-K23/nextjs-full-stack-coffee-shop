@@ -1,4 +1,4 @@
-export default function AdminLayout({
+export default function AuthAdminLayoutLayout({
   children,
 }: {
   children: React.ReactNode;
