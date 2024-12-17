@@ -10,6 +10,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       id: string;
+      isAdmin: boolean;
     } & DefaultSession["user"];
   }
 }
@@ -17,6 +18,7 @@ declare module "next-auth/jwt" {
   interface JWT {
     /** OpenID ID Token */
     id?: string;
+    isAdmin?: boolean;
   }
 }
 
@@ -27,14 +29,16 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
   callbacks: {
     jwt({ token, user }) {
       if (user) {
-        // User is available during sign-in
         token.id = user.id;
+        token.isAdmin = user?.isAdmin;
       }
       return token;
     },
     session({ session, token }) {
       session.user.id = token.id!;
-      return session;
+      session.user.isAdmin = token.isAdmin!;
+
+      return { ...session, isAdmin: token.isAdmin };
     },
   },
 });

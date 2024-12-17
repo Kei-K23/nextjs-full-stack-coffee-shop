@@ -51,7 +51,6 @@ export default function ContactForm() {
     setIsSubmitting(true);
     // Simulate form submission
     setTimeout(() => {
-      console.log(values);
       setIsSubmitting(false);
       toast.success("Message Sent");
       form.reset();

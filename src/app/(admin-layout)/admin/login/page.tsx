@@ -29,6 +29,7 @@ export default async function AdminPage() {
                 <Input
                   id="email"
                   type="email"
+                  name="email"
                   placeholder="m@example.com"
                   required
                 />
@@ -38,6 +39,7 @@ export default async function AdminPage() {
                 <Input
                   id="password"
                   placeholder="password"
+                  name="password"
                   type="password"
                   required
                 />
