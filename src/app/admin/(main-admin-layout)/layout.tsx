@@ -19,7 +19,7 @@ import { usePathname } from "next/navigation";
 const sidebarNavItems = [
   {
     title: "Dashboard",
-    href: "/admin/dashboard",
+    href: "/admin",
     icon: LayoutDashboard,
   },
   {
