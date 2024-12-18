@@ -5,47 +5,13 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
 import ProductCard from "@/components/product-card";
+import { Product } from "@/types";
 
-const PRODUCTS = [
-  {
-    name: "Cappuccino",
-    price: "8.50",
-    image: "/img/cappuccino.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Chai Latte",
-    price: "8.50",
-    image: "/img/chai_latte.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Macchiato",
-    price: "8.50",
-    image: "/img/macchiato.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Expresso",
-    price: "8.50",
-    image: "/img/expresso.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-];
+interface ProductsSectionProps {
+  products: Product[];
+}
 
-export default function ProductsSection() {
+export default function ProductsSection({ products }: ProductsSectionProps) {
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.2,
@@ -111,7 +77,7 @@ export default function ProductsSection() {
           </motion.p>
         </motion.div>
         <div className="mt-8 grid grid-cols-4 gap-x-4">
-          {PRODUCTS.map((product) => (
+          {products.map((product) => (
             <ProductCard key={product.name} product={product} />
           ))}
         </div>

@@ -1,3 +1,4 @@
+import { getAllProducts } from "@/features/admin/queries";
 import HomeScreen from "@/features/home/components/home-screen";
 import { Metadata } from "next";
 
@@ -58,6 +59,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Home() {
-  return <HomeScreen />;
+export default async function Home() {
+  const products = await getAllProducts();
+  return <HomeScreen products={products.slice(0, 4)} />;
 }

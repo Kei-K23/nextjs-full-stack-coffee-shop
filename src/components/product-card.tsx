@@ -11,29 +11,33 @@ export default function ProductCard({ product }: ProductCardProps) {
     <div className="bg-primary-card hover:bg-primary-card-sec transition-all">
       <div className="aspect-[4/3] relative overflow-hidden transition-all">
         <Image
-          src={product.image}
+          src={product.imageUrl || ""}
           alt={product.name}
           fill
-          className="hover:scale-110 transition-all"
+          className="hover:scale-110 transition-all object-cover"
         />
       </div>
       <div className="flex items-center justify-center flex-col p-4">
-        <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">
+        <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec mb-3">
           {product.name}
         </p>
-        <div className="flex items-center gap-2 flex-wrap">
-          {product.ingredients.map((ingredient, index) => {
-            const isLastElement = product.ingredients.length - 1 === index;
-            return (
-              <div key={ingredient.name}>
-                <span>{ingredient.name}</span>{" "}
-                <span>{ingredient.percentage}</span>
-                {!isLastElement && <span className="ml-2">|</span>}
-              </div>
-            );
-          })}
+        <div className="flex items-center gap-2 flex-wrap text-sm">
+          {JSON.parse(product.ingredients).map(
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (ingredient: any, index: any) => {
+              const isLastElement =
+                JSON.parse(product.ingredients).length - 1 === index;
+              return (
+                <div key={ingredient.name}>
+                  <span>{ingredient.name}</span>{" "}
+                  <span>{ingredient.percentage}%</span>
+                  {!isLastElement && <span className="ml-2">|</span>}
+                </div>
+              );
+            }
+          )}
         </div>
-        <p className="text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">
+        <p className="mt-2 text-xl font-bold text-cu-secondary-sec dark:text-cu-primary-sec">
           ${product.price}
         </p>
         <Button

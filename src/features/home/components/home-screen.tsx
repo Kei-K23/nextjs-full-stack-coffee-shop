@@ -7,8 +7,14 @@ import HeroSection from "@/features/home/components/hero-section";
 import ProductsSection from "@/features/home/components/products-section";
 import TestimonialSection from "@/features/home/components/testimonial-section";
 import { useNavbarStore } from "@/stores/use-navbar-store";
+import { Product } from "@/types";
 import { useEffect } from "react";
-export default function HomeScreen() {
+
+interface HomeScreenProps {
+  products: Product[];
+}
+
+export default function HomeScreen({ products }: HomeScreenProps) {
   const { resetState } = useNavbarStore();
   useEffect(() => {
     // Cleanup function to reset navbar store
@@ -21,7 +27,7 @@ export default function HomeScreen() {
     <div>
       <BannerSection />
       <HeroSection />
-      <ProductsSection />
+      <ProductsSection products={products} />
       <FeaturesSection />
       <AdvertisingSection />
       <TestimonialSection />

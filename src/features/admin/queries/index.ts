@@ -32,3 +32,10 @@ export const getAllProducts = async () => {
     },
   });
 };
+
+export const getDashboardAnalyticData = async () => {
+  const coffeeCount = await prisma.coffee.count();
+  return {
+    coffeeCount,
+  };
+};

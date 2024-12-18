@@ -1,3 +1,4 @@
+import { getAllProducts } from "@/features/admin/queries";
 import MenuScreen from "@/features/menu/components/menu-screen";
 import { Metadata } from "next";
 import React from "react";
@@ -59,6 +60,7 @@ export const metadata: Metadata = {
   },
 };
 
-export default function MenuPage() {
-  return <MenuScreen />;
+export default async function MenuPage() {
+  const products = await getAllProducts();
+  return <MenuScreen products={products} />;
 }

@@ -1,156 +1,14 @@
 import ProductCard from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Product } from "@/types";
 import { Search } from "lucide-react";
 
-const PRODUCTS = [
-  {
-    name: "Cappuccino",
-    price: "8.50",
-    image: "/img/cappuccino.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Chai Latte",
-    price: "8.50",
-    image: "/img/chai_latte.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Macchiato",
-    price: "8.50",
-    image: "/img/macchiato.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Expresso",
-    price: "8.50",
-    image: "/img/expresso.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Cappuccino",
-    price: "8.50",
-    image: "/img/cappuccino.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Chai Latte",
-    price: "8.50",
-    image: "/img/chai_latte.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Macchiato",
-    price: "8.50",
-    image: "/img/macchiato.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Expresso",
-    price: "8.50",
-    image: "/img/expresso.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Cappuccino",
-    price: "8.50",
-    image: "/img/cappuccino.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Chai Latte",
-    price: "8.50",
-    image: "/img/chai_latte.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Macchiato",
-    price: "8.50",
-    image: "/img/macchiato.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Expresso",
-    price: "8.50",
-    image: "/img/expresso.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Cappuccino",
-    price: "8.50",
-    image: "/img/cappuccino.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Chai Latte",
-    price: "8.50",
-    image: "/img/chai_latte.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Macchiato",
-    price: "8.50",
-    image: "/img/macchiato.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-  {
-    name: "Expresso",
-    price: "8.50",
-    image: "/img/expresso.png",
-    ingredients: [
-      { name: "Coffee", percentage: "50%" },
-      { name: "Milk", percentage: "50%" },
-    ],
-  },
-];
+interface MenuContainerProps {
+  products: Product[];
+}
 
-export default function MenuContainer() {
+export default function MenuContainer({ products }: MenuContainerProps) {
   return (
     <div className="my-20 px-20">
       <h2 className="text-cu-secondary-sec dark:text-cu-primary-sec text-2xl md:text-3xl font-bold text-center mb-5">
@@ -177,7 +35,7 @@ export default function MenuContainer() {
         </Button>
       </form>
       <div className="mt-10 grid grid-cols-4 gap-6">
-        {PRODUCTS.map((product, index) => (
+        {products.map((product, index) => (
           <ProductCard key={`${product.name}-${index}`} product={product} />
         ))}
       </div>
