@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
-import { Coffee, Moon, Sun } from "lucide-react";
+import { Coffee, Moon, ShoppingCart, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useNavbarStore } from "@/stores/use-navbar-store";
 import { useSession } from "next-auth/react";
@@ -136,6 +136,19 @@ export default function NavbarHeader() {
               </Button>
             )}
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            className={cn(
+              isInside && "text-white dark:text-white",
+              isLightTheme && isInside && "text-white dark:text-white"
+            )}
+            asChild
+          >
+            <Link href={"/checkout"}>
+              <ShoppingCart />
+            </Link>
+          </Button>
           <Button
             variant="ghost"
             size="icon"
