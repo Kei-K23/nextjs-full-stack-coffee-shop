@@ -1,6 +1,6 @@
 "use server";
 
-import { createNewProduct } from "@/features/admin/mutation";
+import { createNewProduct, deleteProduct } from "@/features/admin/mutation";
 import { Product } from "@/types";
 import { revalidatePath } from "next/cache";
 
@@ -30,7 +30,7 @@ export async function productCreateAction(
   // Return early if the form data is invalid
   if (!validatedFields.success) {
     return {
-      errors: validatedFields.error.flatten().fieldErrors,
+      errors: "Invalid input fields",
     };
   }
 
@@ -46,6 +46,23 @@ export async function productCreateAction(
   } catch {
     return {
       errors: "Failed to create product",
+    };
+  }
+}
+
+export async function deleteProductAction(id: string) {
+  try {
+    // mutate data
+    await deleteProduct(id);
+    // revalidate cache
+    revalidatePath("/admin/products");
+
+    return {
+      success: "Successfully deleted product",
+    };
+  } catch {
+    return {
+      errors: "Failed to delete product",
     };
   }
 }

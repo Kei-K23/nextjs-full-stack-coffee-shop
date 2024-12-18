@@ -1,3 +1,4 @@
+import { deleteProductAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Table,
@@ -10,6 +11,7 @@ import {
 import { Product } from "@/types";
 import { Pencil, Trash } from "lucide-react";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function ProductsTable({ products }: { products: Product[] }) {
   return (
@@ -44,7 +46,22 @@ export default function ProductsTable({ products }: { products: Product[] }) {
               <Button variant="ghost" size="icon">
                 <Pencil className="h-4 w-4" />
               </Button>
-              <Button variant="ghost" size="icon">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={async () => {
+                  // TODO: Add delete confirm button
+                  const { errors, success } = await deleteProductAction(
+                    product.id
+                  );
+                  if (errors) {
+                    toast.error(errors);
+                  }
+                  if (success) {
+                    toast.success(success);
+                  }
+                }}
+              >
                 <Trash className="h-4 w-4" />
               </Button>
             </TableCell>

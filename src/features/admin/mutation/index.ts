@@ -8,3 +8,9 @@ export const createNewProduct = async (
     data: product,
   });
 };
+
+export const deleteProduct = async (id: string) => {
+  return await prisma.coffee.delete({
+    where: { id },
+  });
+};

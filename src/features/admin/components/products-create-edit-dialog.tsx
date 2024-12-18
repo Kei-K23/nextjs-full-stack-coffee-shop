@@ -75,11 +75,11 @@ export default function ProductsCreateEditDialog() {
 
             const { errors, success } = await productCreateAction(productData);
             if (errors) {
-              toast.error("Failed to create product");
+              toast.error(errors);
               return;
             }
             if (success) {
-              toast.success("Successfully created product");
+              toast.success(success);
               setIsAddDialogOpen(false);
             }
           }}
