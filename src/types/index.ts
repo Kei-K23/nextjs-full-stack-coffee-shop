@@ -1,13 +1,14 @@
 import { LucideProps } from "lucide-react";
 
 export type Product = {
+  id: string;
   name: string;
-  price: string;
-  image: string;
-  ingredients: {
-    name: string;
-    percentage: string;
-  }[];
+  description: string | null;
+  price: number;
+  coinPrice: number;
+  imageUrl: string | null;
+  createdAt: Date;
+  updatedAt: Date;
 };
 
 export type Feature = {
