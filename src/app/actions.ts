@@ -1,12 +1,16 @@
 "use server";
 
-import { createNewProduct, deleteProduct } from "@/features/admin/mutation";
+import {
+  createNewProduct,
+  deleteProduct,
+  updateProduct,
+} from "@/features/admin/mutation";
 import { Product } from "@/types";
 import { revalidatePath } from "next/cache";
 
 import { z } from "zod";
 
-const productCreateActionSchema = z.object({
+const productMutationActionSchema = z.object({
   name: z.string(),
   description: z.string(),
   price: z.number(),
@@ -18,7 +22,7 @@ const productCreateActionSchema = z.object({
 export async function productCreateAction(
   product: Omit<Product, "id" | "createdAt" | "updatedAt">
 ) {
-  const validatedFields = productCreateActionSchema.safeParse({
+  const validatedFields = productMutationActionSchema.safeParse({
     name: product.name,
     description: product.description,
     coinPrice: product.coinPrice,
@@ -46,6 +50,42 @@ export async function productCreateAction(
   } catch {
     return {
       errors: "Failed to create product",
+    };
+  }
+}
+
+export async function productUpdateAction(
+  id: string,
+  product: Omit<Product, "id" | "createdAt" | "updatedAt">
+) {
+  const validatedFields = productMutationActionSchema.safeParse({
+    name: product.name,
+    description: product.description,
+    coinPrice: product.coinPrice,
+    price: product.price,
+    imageUrl: product.imageUrl,
+    ingredients: product.ingredients,
+  });
+
+  // Return early if the form data is invalid
+  if (!validatedFields.success) {
+    return {
+      errors: "Invalid input fields",
+    };
+  }
+
+  try {
+    // mutate data
+    await updateProduct(id, validatedFields.data);
+    // revalidate cache
+    revalidatePath("/admin/products");
+
+    return {
+      success: "Successfully updated product",
+    };
+  } catch {
+    return {
+      errors: "Failed to update product",
     };
   }
 }

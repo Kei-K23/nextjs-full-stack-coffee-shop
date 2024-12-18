@@ -12,6 +12,7 @@ import { Product } from "@/types";
 import { Pencil, Trash } from "lucide-react";
 import Image from "next/image";
 import { toast } from "sonner";
+import ProductsCreateEditDialog from "./products-create-edit-dialog";
 
 export default function ProductsTable({ products }: { products: Product[] }) {
   return (
@@ -43,9 +44,11 @@ export default function ProductsTable({ products }: { products: Product[] }) {
             <TableCell>${product.price}</TableCell>
             <TableCell>{product.coinPrice}</TableCell>
             <TableCell className="text-right">
-              <Button variant="ghost" size="icon">
-                <Pencil className="h-4 w-4" />
-              </Button>
+              <ProductsCreateEditDialog product={product}>
+                <Button variant="ghost" size="icon">
+                  <Pencil className="h-4 w-4" />
+                </Button>
+              </ProductsCreateEditDialog>
               <Button
                 variant="ghost"
                 size="icon"

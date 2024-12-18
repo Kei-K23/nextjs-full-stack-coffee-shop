@@ -9,6 +9,16 @@ export const createNewProduct = async (
   });
 };
 
+export const updateProduct = async (
+  id: string,
+  product: Omit<Product, "id" | "createdAt" | "updatedAt">
+) => {
+  return await prisma.coffee.update({
+    where: { id },
+    data: product,
+  });
+};
+
 export const deleteProduct = async (id: string) => {
   return await prisma.coffee.delete({
     where: { id },

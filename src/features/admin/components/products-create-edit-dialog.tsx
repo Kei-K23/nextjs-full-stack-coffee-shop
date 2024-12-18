@@ -1,4 +1,4 @@
-import { productCreateAction } from "@/app/actions";
+import { productCreateAction, productUpdateAction } from "@/app/actions";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,16 +10,26 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Ingredient } from "@/types";
+import { Ingredient, Product } from "@/types";
 import { Plus, X } from "lucide-react";
-import { useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export default function ProductsCreateEditDialog() {
-  const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
-  const [ingredients, setIngredients] = useState<Ingredient[]>([
-    { name: "", percentage: 0 },
-  ]);
+interface ProductsCreateEditDialogProps {
+  children: React.ReactNode;
+  product?: Product;
+}
+
+export default function ProductsCreateEditDialog({
+  children,
+  product,
+}: ProductsCreateEditDialogProps) {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [ingredients, setIngredients] = useState<Ingredient[]>(
+    product?.ingredients
+      ? JSON.parse(product.ingredients)
+      : [{ name: "", percentage: 0 }]
+  );
 
   const addIngredient = () => {
     setIngredients([...ingredients, { name: "", percentage: 0 }]);
@@ -46,66 +56,101 @@ export default function ProductsCreateEditDialog() {
     setIngredients(updatedIngredients);
   };
 
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const formData = new FormData(e.currentTarget);
+    const productData = {
+      id: product?.id, // Include the id for edit case
+      name: formData.get("name") as string,
+      description: formData.get("description") as string,
+      price: parseFloat(formData.get("price") as string),
+      coinPrice: parseInt(formData.get("coinPrice") as string, 10),
+      imageUrl: formData.get("imageUrl") as string,
+      ingredients: JSON.stringify(ingredients),
+    };
+
+    const { errors, success } = product
+      ? await productUpdateAction(product.id, productData)
+      : await productCreateAction(productData);
+
+    if (errors) {
+      toast.error(errors);
+      return;
+    }
+    if (success) {
+      toast.success(success);
+      setIsDialogOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (product) {
+      setIngredients(
+        product?.ingredients
+          ? JSON.parse(product.ingredients)
+          : [{ name: "", percentage: 0 }]
+      );
+    }
+  }, [product]);
+
   return (
-    <Dialog open={isAddDialogOpen} onOpenChange={setIsAddDialogOpen}>
-      <DialogTrigger asChild>
-        <Button>
-          <Plus className="mr-2 h-4 w-4" />
-          Add Product
-        </Button>
-      </DialogTrigger>
+    <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="max-w-3xl">
         <DialogHeader>
-          <DialogTitle>Add New Product</DialogTitle>
+          <DialogTitle>
+            {product ? "Edit Product" : "Add New Product"}
+          </DialogTitle>
         </DialogHeader>
-        <form
-          onSubmit={async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(e.currentTarget);
-
-            const productData = {
-              name: formData.get("name") as string,
-              description: formData.get("description") as string,
-              price: parseFloat(formData.get("price") as string),
-              coinPrice: parseInt(formData.get("coinPrice") as string, 10),
-              imageUrl: formData.get("imageUrl") as string,
-              ingredients: JSON.stringify(ingredients),
-            };
-
-            const { errors, success } = await productCreateAction(productData);
-            if (errors) {
-              toast.error(errors);
-              return;
-            }
-            if (success) {
-              toast.success(success);
-              setIsAddDialogOpen(false);
-            }
-          }}
-        >
+        <form onSubmit={handleSubmit}>
           <div className="grid gap-4 py-4">
             <div className="grid gap-2">
               <Label htmlFor="name">Name</Label>
-              <Input id="name" name="name" />
+              <Input
+                id="name"
+                name="name"
+                defaultValue={product?.name}
+                required
+              />
             </div>
             <div className="grid gap-2">
               <Label htmlFor="description">Description</Label>
-              <Textarea id="description" name="description" />
+              <Textarea
+                id="description"
+                name="description"
+                defaultValue={product?.description || ""}
+              />
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="grid gap-2">
                 <Label htmlFor="price">Price ($)</Label>
-                <Input id="price" type="number" name="price" step="0.01" />
+                <Input
+                  id="price"
+                  type="number"
+                  name="price"
+                  step="0.01"
+                  defaultValue={product?.price}
+                  required
+                />
               </div>
               <div className="grid gap-2">
                 <Label htmlFor="coinPrice">Coin Price</Label>
-                <Input id="coinPrice" type="number" name="coinPrice" />
+                <Input
+                  id="coinPrice"
+                  type="number"
+                  name="coinPrice"
+                  defaultValue={product?.coinPrice}
+                  required
+                />
               </div>
             </div>
             <div className="grid gap-2">
               <Label htmlFor="image">Image URL</Label>
-              <Input id="image" name="imageUrl" />
+              <Input
+                id="image"
+                name="imageUrl"
+                defaultValue={product?.imageUrl || ""}
+              />
             </div>
             <div className="grid gap-2">
               <Label>Ingredients</Label>
@@ -128,6 +173,7 @@ export default function ProductsCreateEditDialog() {
                     className="w-24"
                   />
                   <Button
+                    type="button"
                     variant="ghost"
                     size="icon"
                     onClick={() => removeIngredient(index)}
@@ -144,7 +190,7 @@ export default function ProductsCreateEditDialog() {
             </div>
           </div>
           <div className="flex justify-end">
-            <Button type="submit">Save</Button>
+            <Button type="submit">{product ? "Update" : "Save"}</Button>
           </div>
         </form>
       </DialogContent>
