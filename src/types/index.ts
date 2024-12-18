@@ -6,6 +6,7 @@ export type Product = {
   description: string | null;
   price: number;
   coinPrice: number;
+  ingredients: string;
   imageUrl: string | null;
   createdAt: Date;
   updatedAt: Date;

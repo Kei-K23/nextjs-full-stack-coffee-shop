@@ -1,25 +1,10 @@
 import { prisma } from "@/lib/prisma";
-import { verify } from "argon2";
+import { Product } from "@/types";
 
-export const getAdminUser = async (email: string, password: string) => {
-  try {
-    const adminUser = await prisma.admin.findFirst({
-      where: {
-        email,
-      },
-    });
-
-    if (!adminUser) {
-      throw new Error("User not found");
-    }
-    const isVerify = await verify(adminUser.password, password);
-    if (!isVerify) {
-      throw new Error("Invalid credentials");
-    }
-
-    return adminUser;
-  } catch (e) {
-    console.error(e);
-    throw new Error("Something went wrong");
-  }
+export const createNewProduct = async (
+  product: Omit<Product, "id" | "createdAt" | "updatedAt">
+) => {
+  return await prisma.coffee.create({
+    data: product,
+  });
 };

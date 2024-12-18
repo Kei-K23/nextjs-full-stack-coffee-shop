@@ -1,4 +1,4 @@
-import { getAdminUser } from "@/features/admin/mutation";
+import { getAdminUser } from "@/features/admin/queries";
 
 export async function POST(request: Request) {
   const { email, password } = await request.json();
