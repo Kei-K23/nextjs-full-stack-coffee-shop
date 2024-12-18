@@ -12,7 +12,7 @@ export default auth(async (req) => {
   const isAdminRoute = adminRouteReg.test(req.nextUrl.pathname);
 
   // Define destination URLs to prevent infinite loops
-  const adminDashboardUrl = new URL("/admin/dashboard", req.nextUrl.origin);
+  const adminDashboardUrl = new URL("/admin", req.nextUrl.origin);
   const adminLoginUrl = new URL("/admin/login", req.nextUrl.origin);
   const userHomeUrl = new URL("/", req.nextUrl.origin);
 
@@ -30,7 +30,7 @@ export default auth(async (req) => {
 
   // If the user is an admin
   if (isAdmin) {
-    if (!isAdminRoute && req.nextUrl.pathname !== "/admin/dashboard") {
+    if (!isAdminRoute && req.nextUrl.pathname !== "/admin") {
       // Prevent admin from accessing end-user routes
       return NextResponse.redirect(adminDashboardUrl);
     }

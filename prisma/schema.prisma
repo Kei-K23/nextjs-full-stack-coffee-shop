@@ -79,6 +79,7 @@ model Coffee {
   price       Float
   coinPrice   Int
   imageUrl    String?
+  ingredients String
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 

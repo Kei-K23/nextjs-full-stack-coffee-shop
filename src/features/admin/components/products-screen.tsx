@@ -1,19 +1,11 @@
 "use client";
 
+import { Product } from "@/types";
 import ProductsCreateEditDialog from "./products-create-edit-dialog";
 import ProductsTable from "./products-table";
 
 interface ProductsScreenProps {
-  products: {
-    id: string;
-    name: string;
-    description: string | null;
-    price: number;
-    coinPrice: number;
-    imageUrl: string | null;
-    createdAt: Date;
-    updatedAt: Date;
-  }[];
+  products: Product[];
 }
 
 export default function ProductsScreen({ products }: ProductsScreenProps) {
@@ -24,9 +16,13 @@ export default function ProductsScreen({ products }: ProductsScreenProps) {
         <ProductsCreateEditDialog />
       </div>
 
-      <div className="rounded-md border">
-        <ProductsTable products={products} />
-      </div>
+      {products.length > 0 ? (
+        <div className="rounded-md border">
+          <ProductsTable products={products} />
+        </div>
+      ) : (
+        <p className="text-center text-muted-foreground mt-4">No products</p>
+      )}
     </div>
   );
 }

@@ -11,6 +11,11 @@ export type Product = {
   updatedAt: Date;
 };
 
+export type Ingredient = {
+  name: string;
+  percentage: number;
+};
+
 export type Feature = {
   name: string;
   Icon: React.ForwardRefExoticComponent<
