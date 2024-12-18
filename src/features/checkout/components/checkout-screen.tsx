@@ -33,7 +33,7 @@ export default function CheckoutScreen() {
       <div className="container max-w-2xl mx-auto py-16 px-4 mt-28">
         <div className="text-center">
           <h1 className="text-2xl font-bold mb-4">Your cart is empty</h1>
-          <Button onClick={() => router.push("/")}>Check Menu</Button>
+          <Button onClick={() => router.push("/menu")}>Check Menu</Button>
         </div>
       </div>
     );
