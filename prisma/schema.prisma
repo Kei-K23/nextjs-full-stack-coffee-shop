@@ -88,14 +88,18 @@ model Coffee {
 }
 
 model Order {
-  id             String      @id @default(cuid())
-  userId         String
-  user           User        @relation("UserOrders", fields: [userId], references: [id])
-  orderStatus    OrderStatus
-  totalPrice     Float
-  totalCoinsUsed Int         @default(0)
-  createdAt      DateTime    @default(now())
-  updatedAt      DateTime    @updatedAt
+  id               String      @id @default(cuid())
+  userId           String
+  user             User        @relation("UserOrders", fields: [userId], references: [id])
+  orderStatus      OrderStatus
+  totalPrice       Float
+  totalCoinsUsed   Int         @default(0)
+  name             String
+  email            String
+  phone            String
+  delivery_address String
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
 
   orderDetails    OrderDetails[]
   payment         Payment?

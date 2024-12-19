@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
+import { CartItem } from "@/types/index";
 
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { items, userId } = body;
+    const { items, userId, name, email, address, phone } = body;
 
     if (!items?.length || !userId) {
       return new NextResponse("Invalid request data", { status: 400 });
@@ -17,11 +18,15 @@ export async function POST(req: Request) {
         userId,
         orderStatus: "Pending",
         totalPrice: items.reduce(
-          (acc: number, item: any) => acc + item.price * item.quantity,
+          (acc: number, item: CartItem) => acc + item.price * item.quantity,
           0
         ),
+        name: name || "",
+        email: email || "",
+        phone: phone || "",
+        delivery_address: address || "",
         orderDetails: {
-          create: items.map((item: any) => ({
+          create: items.map((item: CartItem) => ({
             coffeeId: item.id,
             quantity: item.quantity,
             price: item.price,
@@ -36,7 +41,7 @@ export async function POST(req: Request) {
     // Create Stripe checkout session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
-      line_items: items.map((item: any) => ({
+      line_items: items.map((item: CartItem) => ({
         price_data: {
           currency: "usd",
           product_data: {

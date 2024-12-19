@@ -2,11 +2,7 @@
 
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { Product } from "@/types";
-
-interface CartItem extends Product {
-  quantity: number;
-}
+import { CartItem, Product } from "@/types";
 
 interface CartStore {
   items: CartItem[];

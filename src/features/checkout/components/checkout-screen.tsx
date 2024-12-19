@@ -15,7 +15,12 @@ export default function CheckoutScreen() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
-  async function onSubmit(values: any) {
+  async function onSubmit(values: {
+    name: string;
+    email: string;
+    address: string;
+    phone: string;
+  }) {
     try {
       setIsLoading(true);
       const response = await fetch("/api/checkout/create-checkout", {
@@ -26,6 +31,7 @@ export default function CheckoutScreen() {
         body: JSON.stringify({
           items,
           userId: session?.user?.id,
+          ...values,
         }),
       });
 

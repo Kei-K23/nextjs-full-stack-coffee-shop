@@ -31,3 +31,7 @@ export type Testimonial = {
   role: string;
   profileImage: string;
 };
+
+export interface CartItem extends Product {
+  quantity: number;
+}
