@@ -12,6 +12,7 @@ import { useNavbarStore } from "@/stores/use-navbar-store";
 import { useSession } from "next-auth/react";
 import { useLocation } from "@/provider/ip-address-provider";
 import UserAvatarDropdown from "./user-avatar-dropdown";
+import { useCartStore } from "@/stores/use-cart-store";
 
 const NAVIGATION_LINKS = [
   {
@@ -33,6 +34,8 @@ const NAVIGATION_LINKS = [
 ];
 
 export default function NavbarHeader() {
+  const { getTotalItems } = useCartStore();
+  const totalShoppingCartItems = getTotalItems();
   const { location } = useLocation();
   const { theme, setTheme } = useTheme();
   const {
@@ -140,12 +143,17 @@ export default function NavbarHeader() {
             variant="ghost"
             size="icon"
             className={cn(
-              isInside && "text-white dark:text-white",
+              isInside && "text-white relative dark:text-white",
               isLightTheme && isInside && "text-white dark:text-white"
             )}
             asChild
           >
             <Link href={"/checkout"}>
+              {totalShoppingCartItems > 0 && (
+                <span className="absolute top-0 right-0">
+                  {totalShoppingCartItems}
+                </span>
+              )}
               <ShoppingCart />
             </Link>
           </Button>

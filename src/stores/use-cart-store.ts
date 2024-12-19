@@ -16,6 +16,7 @@ interface CartStore {
   clearCart: () => void;
   getTotalPrice: () => number;
   getTotalItems: () => number;
+  checkItemExistInCart: (productId: string) => boolean;
 }
 
 export const useCartStore = create<CartStore>()(
@@ -61,7 +62,11 @@ export const useCartStore = create<CartStore>()(
       },
       getTotalItems: () => {
         const { items } = get();
-        return items.reduce((total, item) => total + item.quantity, 0);
+        return items.reduce((total, item) => total + item.quantity, 0) || 0;
+      },
+      checkItemExistInCart: (productId) => {
+        const { items } = get();
+        return items.some((p) => p.id === productId);
       },
     }),
     {

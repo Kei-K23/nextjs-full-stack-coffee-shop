@@ -10,7 +10,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const { addItem } = useCartStore();
+  const { addItem, checkItemExistInCart } = useCartStore();
   return (
     <div className="bg-primary-card flex flex-col hover:bg-primary-card-sec transition-all">
       <div className="aspect-[4/3] relative overflow-hidden transition-all">
@@ -48,6 +48,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
         <div className="flex-1"></div>
         <Button
+          disabled={checkItemExistInCart(product.id)}
           onClick={() => addItem(product)}
           variant={"primary"}
           className="mt-4 text-black dark:text-black z-20 relative font-bold"

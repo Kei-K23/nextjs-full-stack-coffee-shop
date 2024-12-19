@@ -52,9 +52,9 @@ export function OrderSummaryItem({ item }: OrderSummaryItemProps) {
               <Plus className="h-3 w-3" />
             </Button>
             <Button
-              variant="ghost"
+              variant="destructive"
               size="icon"
-              className="h-6 w-6 text-destructive hover:text-destructive"
+              className="h-6 w-6"
               onClick={() => removeItem(item.id)}
             >
               <Trash2 className="h-3 w-3" />
