@@ -6,23 +6,40 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { OrderSummary } from "./order-summary";
 import { CheckoutForm } from "./checkout-form";
+import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 export default function CheckoutScreen() {
-  const { items, clearCart } = useCartStore();
+  const { data: session } = useSession();
+  const { items } = useCartStore();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   async function onSubmit(values: any) {
     try {
       setIsLoading(true);
-      // Here you would typically make an API call to create the order
-      // For now, we'll just simulate a delay
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      const response = await fetch("/api/checkout/create-checkout", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items,
+          userId: session?.user?.id,
+        }),
+      });
 
-      clearCart();
-      router.push("/order-success");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      // Redirect to Stripe Checkout
+      window.location.href = data.url;
     } catch (error) {
-      console.error("Error creating order:", error);
+      console.error("Checkout error:", error);
+      toast.error("Something went wrong. Please try again.");
     } finally {
       setIsLoading(false);
     }
