@@ -34,6 +34,14 @@ export const getAllProducts = async () => {
   });
 };
 
+export const getAllCustomers = async () => {
+  return await prisma.user.findMany({
+    include: {
+      orders: true,
+    },
+  });
+};
+
 export const getDashboardAnalyticData = async () => {
   const coffeeCount = await prisma.coffee.count();
   return {
