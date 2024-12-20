@@ -13,9 +13,11 @@ import { CoffeeIcon, Coins, User as UserIcon } from "lucide-react";
 
 interface UserInfoProps {
   user: User;
+  totalOrders: number;
+  totalCoin: number;
 }
 
-export function UserInfo({ user }: UserInfoProps) {
+export function UserInfo({ user, totalOrders, totalCoin }: UserInfoProps) {
   return (
     <div className="space-y-6">
       <Card className="border-none shadow-none">
@@ -47,7 +49,7 @@ export function UserInfo({ user }: UserInfoProps) {
             </CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">1,234</p>
+            <p className="text-2xl font-bold">{totalCoin}</p>
           </CardContent>
         </Card>
 
@@ -62,7 +64,7 @@ export function UserInfo({ user }: UserInfoProps) {
             <CardDescription>Your lifetime orders with us</CardDescription>
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">42</p>
+            <p className="text-2xl font-bold">{totalOrders}</p>
           </CardContent>
         </Card>
       </div>

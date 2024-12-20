@@ -1,3 +1,4 @@
+import { auth } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 
 import { verify } from "argon2";
@@ -38,4 +39,28 @@ export const getDashboardAnalyticData = async () => {
   return {
     coffeeCount,
   };
+};
+
+export const getUserData = async (userId: string) => {
+  return await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  });
+};
+
+export const getOrdersByAuthUser = async () => {
+  const session = await auth();
+  return await prisma.order.findMany({
+    where: {
+      userId: session?.user.id,
+    },
+    include: {
+      orderDetails: {
+        include: {
+          coffee: true,
+        },
+      },
+    },
+  });
 };

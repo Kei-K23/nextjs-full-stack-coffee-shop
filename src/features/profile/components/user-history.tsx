@@ -10,33 +10,17 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
+import { Coffee, Order, OrderDetails } from "@prisma/client";
 
-export function OrderHistory() {
-  // Mock data - replace with actual data fetching
-  const orders = [
-    {
-      id: "1",
-      date: "2024-03-20",
-      total: 15.99,
-      status: "Completed",
-      items: "Cappuccino (2x), Croissant",
-    },
-    {
-      id: "2",
-      date: "2024-03-18",
-      total: 12.5,
-      status: "Completed",
-      items: "Latte, Blueberry Muffin",
-    },
-    {
-      id: "3",
-      date: "2024-03-15",
-      total: 18.75,
-      status: "Completed",
-      items: "Mocha (2x), Chocolate Cake",
-    },
-  ];
+interface OrderHistoryProps {
+  orders: (Order & {
+    orderDetails: (OrderDetails & {
+      coffee: Coffee;
+    })[];
+  })[];
+}
 
+export function OrderHistory({ orders }: OrderHistoryProps) {
   return (
     <Card className="border-none shadow-none">
       <Table>
@@ -53,11 +37,24 @@ export function OrderHistory() {
           {orders.map((order) => (
             <TableRow key={order.id}>
               <TableCell className="font-medium">#{order.id}</TableCell>
-              <TableCell>{new Date(order.date).toLocaleDateString()}</TableCell>
-              <TableCell>{order.items}</TableCell>
-              <TableCell>${order.total.toFixed(2)}</TableCell>
               <TableCell>
-                <Badge variant="secondary">{order.status}</Badge>
+                {new Date(order.createdAt).toLocaleDateString()}
+              </TableCell>
+              <TableCell>
+                <div>
+                  {order.orderDetails.map((od, i) => (
+                    <p key={od.id}>
+                      <span key={od.id}>
+                        {od.coffee.name} ({od.quantity})
+                      </span>
+                      {order.orderDetails.length - 1 > i && <span>|</span>}
+                    </p>
+                  ))}
+                </div>
+              </TableCell>
+              <TableCell>${order.totalPrice}</TableCell>
+              <TableCell>
+                <Badge variant="secondary">{order.orderStatus}</Badge>
               </TableCell>
             </TableRow>
           ))}

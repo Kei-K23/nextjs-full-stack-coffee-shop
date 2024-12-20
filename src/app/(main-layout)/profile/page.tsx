@@ -1,5 +1,6 @@
 import { UserProfile } from "@/features/profile/components/user-profile";
 import { auth } from "@/lib/auth";
+import { getOrdersByAuthUser, getUserData } from "@/queries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -52,20 +53,22 @@ export const metadata: Metadata = {
     creator: "@brewhaven",
     images: ["https://www.brewhaven.com/twitter-image.jpg"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
 };
 
 export default async function ProfilePage() {
   const session = await auth();
+  const orders = await getOrdersByAuthUser();
+  // eslint-disable-next-line @typescript-eslint/no-non-null-asserted-optional-chain
+  const userData = await getUserData(session?.user.id!);
 
   return (
     <div className="pt-28">
       <div className="container mx-auto px-4 py-8">
-        <UserProfile user={session?.user} />
+        <UserProfile
+          user={session?.user}
+          orders={orders}
+          userData={userData!}
+        />
       </div>
     </div>
   );

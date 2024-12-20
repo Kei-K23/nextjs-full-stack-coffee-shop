@@ -7,12 +7,19 @@ import { Card } from "@/components/ui/card";
 import { UserInfo } from "./user-info";
 import { OrderHistory } from "./user-history";
 import { CoinHistory } from "./coin-history";
+import { Coffee, Order, OrderDetails, User as UserData } from "@prisma/client";
 
 interface UserProfileProps {
+  userData: UserData;
   user?: User | null;
+  orders: (Order & {
+    orderDetails: (OrderDetails & {
+      coffee: Coffee;
+    })[];
+  })[];
 }
 
-export function UserProfile({ user }: UserProfileProps) {
+export function UserProfile({ user, orders, userData }: UserProfileProps) {
   const [activeTab, setActiveTab] = useState("info");
 
   if (!user) {
@@ -42,10 +49,14 @@ export function UserProfile({ user }: UserProfileProps) {
             <TabsTrigger value="coins">Coin History</TabsTrigger>
           </TabsList>
           <TabsContent value="info" className="p-4">
-            <UserInfo user={user} />
+            <UserInfo
+              user={user}
+              totalOrders={orders.length}
+              totalCoin={userData.coinBalance}
+            />
           </TabsContent>
           <TabsContent value="orders" className="p-4">
-            <OrderHistory />
+            <OrderHistory orders={orders} />
           </TabsContent>
           <TabsContent value="coins" className="p-4">
             <CoinHistory />

@@ -51,11 +51,6 @@ export const metadata: Metadata = {
     creator: "@brewhaven",
     images: ["https://www.brewhaven.com/twitter-image.jpg"],
   },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-  },
 };
 
 export default function ContactUsPage() {
