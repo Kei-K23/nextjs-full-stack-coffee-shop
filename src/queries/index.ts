@@ -42,9 +42,26 @@ export const getDashboardAnalyticData = async () => {
 };
 
 export const getUserData = async (userId: string) => {
-  return await prisma.user.findUnique({
-    where: {
-      id: userId,
+  if (!userId) {
+    return null;
+  } else {
+    return await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+  }
+};
+
+export const getAllOrders = async () => {
+  return await prisma.order.findMany({
+    include: {
+      orderDetails: {
+        include: {
+          coffee: true,
+        },
+      },
+      payment: true,
     },
   });
 };

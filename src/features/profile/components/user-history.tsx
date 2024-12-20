@@ -47,7 +47,7 @@ export function OrderHistory({ orders }: OrderHistoryProps) {
                       <span key={od.id}>
                         {od.coffee.name} ({od.quantity})
                       </span>
-                      {order.orderDetails.length - 1 > i && <span>|</span>}
+                      {order.orderDetails.length - 1 > i && <span> |</span>}
                     </p>
                   ))}
                 </div>

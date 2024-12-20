@@ -10,7 +10,6 @@ import { Coffee, Moon, ShoppingCart, Sun } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { useNavbarStore } from "@/stores/use-navbar-store";
 import { useSession } from "next-auth/react";
-import { useLocation } from "@/provider/ip-address-provider";
 import UserAvatarDropdown from "./user-avatar-dropdown";
 import { useCartStore } from "@/stores/use-cart-store";
 
@@ -36,7 +35,6 @@ const NAVIGATION_LINKS = [
 export default function NavbarHeader() {
   const { getTotalItems } = useCartStore();
   const totalShoppingCartItems = getTotalItems();
-  const { location } = useLocation();
   const { theme, setTheme } = useTheme();
   const {
     setPosition,
@@ -121,7 +119,6 @@ export default function NavbarHeader() {
           ))}
         </nav>
         <div className="flex items-center gap-x-2">
-          <span>{location}</span>
           {/* <div className="w-[1px] h-8 bg-gray-500 mx-2" /> */}
           <div className="flex items-center gap-x-2">
             {!!session?.user ? (

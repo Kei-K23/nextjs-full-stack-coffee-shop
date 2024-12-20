@@ -16,7 +16,7 @@ export default async function AdminPage() {
             }}
             className="p-6"
           >
-            <input type="hidden" name="redirectTo" value="/admin/dashboard" />
+            <input type="hidden" name="redirectTo" value="/admin" />
             <div className="flex flex-col gap-6">
               <div className="flex flex-col items-center text-center">
                 <h1 className="text-2xl font-bold">Welcome back</h1>

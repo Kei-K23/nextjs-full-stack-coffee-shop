@@ -4,7 +4,6 @@ import "./globals.css";
 import { ThemeProvider } from "@/provider/theme-provider";
 import { Toaster } from "sonner";
 import { SessionProvider } from "next-auth/react";
-import { LocationProvider } from "@/provider/ip-address-provider";
 
 const playfairDisplay = localFont({
   src: "./fonts/PlayfairDisplay-VariableFont_wght.ttf",
@@ -85,9 +84,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SessionProvider>
-            <LocationProvider>{children}</LocationProvider>
-          </SessionProvider>
+          <SessionProvider>{children}</SessionProvider>
           <Toaster />
         </ThemeProvider>
       </body>
