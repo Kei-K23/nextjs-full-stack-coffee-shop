@@ -1,10 +1,6 @@
 "use server";
 
-import {
-  createNewProduct,
-  deleteProduct,
-  updateProduct,
-} from "@/features/admin/mutation";
+import { createNewProduct, deleteProduct, updateProduct } from "@/mutation";
 import { Product } from "@/types";
 import { revalidatePath } from "next/cache";
 

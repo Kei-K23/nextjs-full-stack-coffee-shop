@@ -47,6 +47,7 @@ export default function ContactForm() {
     },
   });
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     // Simulate form submission

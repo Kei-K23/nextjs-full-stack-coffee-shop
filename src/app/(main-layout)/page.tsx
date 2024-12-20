@@ -1,5 +1,5 @@
-import { getAllProducts } from "@/features/admin/queries";
 import HomeScreen from "@/features/home/components/home-screen";
+import { getAllProducts } from "@/queries";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

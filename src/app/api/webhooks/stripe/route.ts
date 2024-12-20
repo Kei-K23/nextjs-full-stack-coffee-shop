@@ -18,6 +18,7 @@ export async function POST(req: Request) {
     );
 
     if (event.type === "checkout.session.completed") {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const session = event.data.object as any;
       const orderId = session.metadata.orderId;
 

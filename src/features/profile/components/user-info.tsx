@@ -2,7 +2,6 @@
 
 import { User } from "next-auth";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -10,9 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { CoffeeIcon, Coins, Mail, User as UserIcon } from "lucide-react";
+import { CoffeeIcon, Coins, User as UserIcon } from "lucide-react";
 
 interface UserInfoProps {
   user: User;
@@ -36,7 +33,7 @@ export function UserInfo({ user }: UserInfoProps) {
         </CardContent>
       </Card>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader className="space-y-1">
             <CardTitle className="text-xl">
@@ -66,25 +63,6 @@ export function UserInfo({ user }: UserInfoProps) {
           </CardHeader>
           <CardContent>
             <p className="text-2xl font-bold">42</p>
-          </CardContent>
-        </Card>
-
-        <Card className="md:col-span-2 lg:col-span-1">
-          <CardHeader className="space-y-1">
-            <CardTitle className="text-xl">
-              <span className="flex items-center gap-2">
-                <Mail className="h-5 w-5 text-cu-primary" />
-                Contact Preferences
-              </span>
-            </CardTitle>
-            <CardDescription>Manage your email preferences</CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="email">Email Address</Label>
-              <Input id="email" value={user.email || ""} disabled />
-            </div>
-            <Button>Update Preferences</Button>
           </CardContent>
         </Card>
       </div>

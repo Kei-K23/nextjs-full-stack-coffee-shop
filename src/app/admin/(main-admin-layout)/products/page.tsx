@@ -1,5 +1,5 @@
 import ProductsScreen from "@/features/admin/components/products-screen";
-import { getAllProducts } from "@/features/admin/queries";
+import { getAllProducts } from "@/queries";
 
 export default async function ProductsPage() {
   const products = await getAllProducts();

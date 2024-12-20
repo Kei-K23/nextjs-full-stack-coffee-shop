@@ -1,5 +1,5 @@
-import { getAllProducts } from "@/features/admin/queries";
 import MenuScreen from "@/features/menu/components/menu-screen";
+import { getAllProducts } from "@/queries";
 import { Metadata } from "next";
 import React from "react";
 

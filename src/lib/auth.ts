@@ -1,10 +1,14 @@
-import NextAuth, { DefaultSession } from "next-auth";
+import NextAuth, { DefaultSession, User as DefaultUser } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import { PrismaClient } from "@prisma/client";
 import "next-auth/jwt";
 import authConfig from "./auth.config";
 
 const prisma = new PrismaClient();
+// Extend the User type to include isAdmin
+interface User extends DefaultUser {
+  isAdmin?: boolean;
+}
 
 declare module "next-auth" {
   interface Session {
@@ -30,7 +34,7 @@ export const { auth, handlers, signIn, signOut } = NextAuth({
     jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.isAdmin = user?.isAdmin;
+        token.isAdmin = (user as User).isAdmin;
       }
       return token;
     },
