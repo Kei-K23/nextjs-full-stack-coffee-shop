@@ -15,7 +15,15 @@ import {
 import { MoreHorizontal, Eye } from "lucide-react";
 import { formatDistance } from "date-fns";
 import { OrderDetailsDialog } from "./order-details-dialog";
-import { Coffee, Order, OrderDetails, Payment } from "@prisma/client";
+import {
+  Coffee,
+  Order,
+  OrderDetails,
+  OrderStatus,
+  Payment,
+} from "@prisma/client";
+import { updateOrderStatus } from "@/app/actions";
+import { toast } from "sonner";
 
 export const columns: ColumnDef<
   Order & {
@@ -101,14 +109,58 @@ export const columns: ColumnDef<
               <DropdownMenuSeparator />
               {order.orderStatus === "Pending" && (
                 <>
-                  <DropdownMenuItem>Mark as paid</DropdownMenuItem>
-                  <DropdownMenuItem className="text-destructive">
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      const { errors, success } = await updateOrderStatus(
+                        order.id,
+                        OrderStatus.Paid
+                      );
+                      if (errors) {
+                        toast.error(errors);
+                      }
+                      if (success) {
+                        toast.success(success);
+                      }
+                    }}
+                  >
+                    Mark as paid
+                  </DropdownMenuItem>
+                  <DropdownMenuItem
+                    onClick={async () => {
+                      const { errors, success } = await updateOrderStatus(
+                        order.id,
+                        OrderStatus.Cancelled
+                      );
+                      if (errors) {
+                        toast.error(errors);
+                      }
+                      if (success) {
+                        toast.success(success);
+                      }
+                    }}
+                    className="text-destructive"
+                  >
                     Cancel order
                   </DropdownMenuItem>
                 </>
               )}
               {order.orderStatus === "Paid" && (
-                <DropdownMenuItem>Mark as completed</DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={async () => {
+                    const { errors, success } = await updateOrderStatus(
+                      order.id,
+                      OrderStatus.Completed
+                    );
+                    if (errors) {
+                      toast.error(errors);
+                    }
+                    if (success) {
+                      toast.success(success);
+                    }
+                  }}
+                >
+                  Mark as completed
+                </DropdownMenuItem>
               )}
             </DropdownMenuContent>
           </DropdownMenu>

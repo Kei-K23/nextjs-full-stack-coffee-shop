@@ -1,7 +1,9 @@
 "use server";
 
+import { prisma } from "@/lib/prisma";
 import { createNewProduct, deleteProduct, updateProduct } from "@/mutation";
 import { Product } from "@/types";
+import { OrderStatus } from "@prisma/client";
 import { revalidatePath } from "next/cache";
 
 import { z } from "zod";
@@ -99,6 +101,29 @@ export async function deleteProductAction(id: string) {
   } catch {
     return {
       errors: "Failed to delete product",
+    };
+  }
+}
+
+export async function updateOrderStatus(id: string, status: OrderStatus) {
+  try {
+    await prisma.order.update({
+      where: {
+        id,
+      },
+      data: {
+        orderStatus: status,
+      },
+    });
+    // revalidate cache
+    revalidatePath("/admin/products");
+
+    return {
+      success: "Successfully updated order status",
+    };
+  } catch {
+    return {
+      errors: "Failed to update order status",
     };
   }
 }
