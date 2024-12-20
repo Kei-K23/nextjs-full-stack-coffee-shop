@@ -81,3 +81,49 @@ export const getOrdersByAuthUser = async () => {
     },
   });
 };
+
+export const getOrderStatistics = async () => {
+  try {
+    // Fetch the total order counts and specific status counts
+    const [
+      totalOrders,
+      pendingOrders,
+      paidOrders,
+      completedOrders,
+      cancelledOrders,
+    ] = await Promise.all([
+      prisma.order.count(), // Total number of orders
+      prisma.order.count({
+        where: {
+          orderStatus: "Pending",
+        },
+      }),
+      prisma.order.count({
+        where: {
+          orderStatus: "Paid",
+        },
+      }),
+      prisma.order.count({
+        where: {
+          orderStatus: "Completed",
+        },
+      }),
+      prisma.order.count({
+        where: {
+          orderStatus: "Cancelled",
+        },
+      }),
+    ]);
+
+    return {
+      totalOrders,
+      pendingOrders,
+      paidOrders,
+      completedOrders,
+      cancelledOrders,
+    };
+  } catch (error) {
+    console.error("Error fetching order statistics:", error);
+    throw error;
+  }
+};

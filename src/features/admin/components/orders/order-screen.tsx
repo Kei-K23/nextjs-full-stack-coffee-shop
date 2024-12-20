@@ -10,9 +10,19 @@ import { columns } from "@/features/admin/components/orders/columns";
 
 interface OrdersScreenPageProps {
   orderData: Order[];
+  orderStatistics: {
+    totalOrders: number;
+    pendingOrders: number;
+    paidOrders: number;
+    completedOrders: number;
+    cancelledOrders: number;
+  };
 }
 
-export default function OrdersScreenPage({ orderData }: OrdersScreenPageProps) {
+export default function OrdersScreenPage({
+  orderData,
+  orderStatistics,
+}: OrdersScreenPageProps) {
   const [activeTab, setActiveTab] = useState<OrderStatus>("Pending");
 
   return (
@@ -27,26 +37,33 @@ export default function OrdersScreenPage({ orderData }: OrdersScreenPageProps) {
       <div className="grid gap-8 md:grid-cols-4">
         <StatsCard
           title="Total Orders"
-          value="156"
+          value={orderStatistics.totalOrders.toString()}
           description="Last 30 days"
         />
         <StatsCard
           title="Pending Orders"
-          value="23"
+          value={orderStatistics.pendingOrders.toString()}
+          description="Needs attention"
+          trend="up"
+          trendValue="12%"
+        />
+        <StatsCard
+          title="Paid Orders"
+          value={orderStatistics.paidOrders.toString()}
           description="Needs attention"
           trend="up"
           trendValue="12%"
         />
         <StatsCard
           title="Completed Orders"
-          value="89"
+          value={orderStatistics.completedOrders.toString()}
           description="Last 30 days"
           trend="up"
           trendValue="8%"
         />
         <StatsCard
           title="Cancelled Orders"
-          value="12"
+          value={orderStatistics.cancelledOrders.toString()}
           description="Last 30 days"
           trend="down"
           trendValue="3%"

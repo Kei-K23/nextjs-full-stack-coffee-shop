@@ -1,8 +1,13 @@
 import OrdersScreenPage from "@/features/admin/components/orders/order-screen";
-import { getAllOrders } from "@/queries";
+import { getAllOrders, getOrderStatistics } from "@/queries";
 
 export default async function OrderPage() {
-  const orderData = await getAllOrders();
+  const [orderData, orderStatistics] = await Promise.all([
+    getAllOrders(),
+    getOrderStatistics(),
+  ]);
 
-  return <OrdersScreenPage orderData={orderData} />;
+  return (
+    <OrdersScreenPage orderData={orderData} orderStatistics={orderStatistics} />
+  );
 }
