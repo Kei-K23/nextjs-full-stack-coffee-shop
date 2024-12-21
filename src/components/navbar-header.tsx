@@ -33,6 +33,7 @@ const NAVIGATION_LINKS = [
 ];
 
 export default function NavbarHeader() {
+  const { status } = useSession();
   const { getTotalItems } = useCartStore();
   const totalShoppingCartItems = getTotalItems();
   const { theme, setTheme } = useTheme();
@@ -136,24 +137,26 @@ export default function NavbarHeader() {
               </Button>
             )}
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            className={cn(
-              isInside && "text-white relative dark:text-white",
-              isLightTheme && isInside && "text-white dark:text-white"
-            )}
-            asChild
-          >
-            <Link href={"/checkout"}>
-              {totalShoppingCartItems > 0 && (
-                <span className="absolute top-0 right-0">
-                  {totalShoppingCartItems}
-                </span>
+          {status === "authenticated" && (
+            <Button
+              variant="ghost"
+              size="icon"
+              className={cn(
+                isInside && "text-white relative dark:text-white",
+                isLightTheme && isInside && "text-white dark:text-white"
               )}
-              <ShoppingCart />
-            </Link>
-          </Button>
+              asChild
+            >
+              <Link href={"/checkout"}>
+                {totalShoppingCartItems > 0 && (
+                  <span className="absolute top-0 right-0">
+                    {totalShoppingCartItems}
+                  </span>
+                )}
+                <ShoppingCart />
+              </Link>
+            </Button>
+          )}
           <Button
             variant="ghost"
             size="icon"

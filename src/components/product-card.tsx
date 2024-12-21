@@ -4,12 +4,14 @@ import { Product } from "@/types";
 import Image from "next/image";
 import { Button } from "./ui/button";
 import { useCartStore } from "@/stores/use-cart-store";
+import { useSession } from "next-auth/react";
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
+  const { status } = useSession();
   const { addItem, checkItemExistInCart } = useCartStore();
   return (
     <div className="bg-primary-card flex flex-col hover:bg-primary-card-sec transition-all">
@@ -47,14 +49,16 @@ export default function ProductCard({ product }: ProductCardProps) {
           </p>
         </div>
         <div className="flex-1"></div>
-        <Button
-          disabled={checkItemExistInCart(product.id)}
-          onClick={() => addItem(product)}
-          variant={"primary"}
-          className="mt-4 text-black dark:text-black z-20 relative font-bold"
-        >
-          Add to Cart
-        </Button>
+        {status === "authenticated" && (
+          <Button
+            disabled={checkItemExistInCart(product.id)}
+            onClick={() => addItem(product)}
+            variant={"primary"}
+            className="mt-4 text-black dark:text-black z-20 relative font-bold"
+          >
+            Add to Cart
+          </Button>
+        )}
       </div>
     </div>
   );

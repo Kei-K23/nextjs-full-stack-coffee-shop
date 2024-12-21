@@ -2,11 +2,17 @@ import { NextResponse } from "next/server";
 import { stripe } from "@/lib/stripe";
 import { prisma } from "@/lib/prisma";
 import { CartItem } from "@/types/index";
+import { auth } from "@/lib/auth";
 
 export async function POST(req: Request) {
   try {
+    const data = await auth();
     const body = await req.json();
     const { items, userId, name, email, address, phone } = body;
+
+    if (!!!data?.user) {
+      return new NextResponse("Cannot process checkout", { status: 401 });
+    }
 
     if (!items?.length || !userId) {
       return new NextResponse("Invalid request data", { status: 400 });
